@@ -1,0 +1,17 @@
+<p>list works!</p>
+
+<div class="flex justify-center">
+  <ul
+    role="list"
+    class="flex flex-col w-full md:max-w-screen-md divide-y divide-gray-100"
+  >
+    @for (item of item(); track item.id) { @defer (on viewport) {
+    <!-- <div>
+  {{ item.name | json }}
+</div> -->
+    <app-item [item]="item" (loaded)="loaded($event)" />
+    } @placeholder {
+    <div>loading...</div>
+    } }
+  </ul>
+</div>

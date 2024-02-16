@@ -1,0 +1,46 @@
+<li class="flex grow justify-between gap-x-6 py-5">
+  <!-- <div class="flex max-w-lg"> -->
+  <div class="flex min-w-0 gap-x-4">
+    <img
+      class="h-16 w-16 flex-none"
+      ngSrc="{{ item().imageUrl }}"
+      width="256"
+      height="256"
+      alt=""
+    />
+    <div class="min-w-0 flex-auto">
+      <p class="text-sm font-semibold leading-6 text-gray-900">
+        {{ item().name }}
+      </p>
+      <div class="flex flex-row">
+        @for (type of item().types; track $index) {
+        <p class="mt-1 mr-3 truncate text-xs leading-5 text-gray-500">
+          {{ type.type.name }}
+        </p>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden shrink-0 sm:flex sm:flex-col justify-center sm:items-end">
+    <!-- <p class="text-sm leading-6 text-gray-900">Co-Founder / CEO</p>
+    <p class="mt-1 text-xs leading-5 text-gray-500">
+      Last seen <time datetime="2023-01-23T13:23Z">3h ago</time>
+    </p> -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-6 h-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="m8.25 4.5 7.5 7.5-7.5 7.5"
+      />
+    </svg>
+  </div>
+  <!-- </div> -->
+</li>

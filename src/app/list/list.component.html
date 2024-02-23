@@ -1,17 +1,50 @@
 <p>list works!</p>
 
+<div class="z-50 fixed bottom-0 w-full">
+  <a
+    class="bottom-0 my-8 mr-8 float-right px-5 py-2 bg-red-500 text-white text-sm font-extrabold tracking-wide rounded-full focus:outline-none"
+    routerLink="/another"
+  >
+    another page
+  </a>
+</div>
+
 <div class="flex justify-center">
   <ul
     role="list"
     class="flex flex-col w-full md:max-w-screen-md divide-y divide-gray-100"
   >
     @for (item of item(); track item.id) { @defer (on viewport) {
-    <!-- <div>
-  {{ item.name | json }}
-</div> -->
-    <app-item [item]="item" (loaded)="loaded($event)" />
-    } @placeholder {
-    <div>loading...</div>
+    <app-item [item]="item" (loaded)="loaded($event)" [id]="item.id" />
+    } @placeholder (minimum 500ms) {
+    <div class="flex justify-center py-5" [id]="item.id">
+      <ul class="md:max-w-screen-md w-full mx-auto">
+        <li class="animate-pulse flex space-x-4">
+          <div class="rounded-full bg-slate-300 h-16 w-16"></div>
+          <div class="flex-1 space-y-3 py-1">
+            <div class="h-4 bg-slate-300 rounded"></div>
+            <div class="space-y-3">
+              <div class="grid grid-cols-5 gap-4">
+                <div class="h-2 bg-slate-300 rounded col-span-1"></div>
+                <div class="h-2 bg-slate-300 rounded col-span-1"></div>
+                <div class="h-2 bg-slate-300 rounded col-span-1"></div>
+                <div class="h-2 bg-slate-300 rounded col-span-1"></div>
+                <div class="h-2 bg-slate-300 rounded col-span-1"></div>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="h-2 bg-slate-300 rounded col-span-1"></div>
+                <div class="h-2 bg-slate-300 rounded col-span-1"></div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
     } }
+    <div class="flex justify-center py-5" aria-label="loading">
+      <div class="animate-ping h-2 w-2 bg-red-600 rounded-full"></div>
+      <div class="animate-ping h-2 w-2 bg-yellow-600 rounded-full mx-4"></div>
+      <div class="animate-ping h-2 w-2 bg-blue-600 rounded-full"></div>
+    </div>
   </ul>
 </div>

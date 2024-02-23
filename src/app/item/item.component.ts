@@ -1,4 +1,4 @@
-import { Component, EventEmitter, effect, input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, effect, input,Input, OnInit, Output } from '@angular/core';
 import { JsonPipe, NgOptimizedImage  } from '@angular/common';
 import { Item, ItemDetail } from '../interface/item';
 
@@ -10,7 +10,6 @@ import { Item, ItemDetail } from '../interface/item';
   styleUrl: './item.component.scss'
 })
 export class ItemComponent {
-  // @Input({required: true}) item!: ItemDetail;
   readonly item = input.required<ItemDetail>();
   @Output() loaded = new EventEmitter<number>();
 

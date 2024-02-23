@@ -1,49 +1,49 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { JsonPipe } from '@angular/common';
+import { Component, OnInit, AfterViewInit, inject, signal, computed, ViewChild, HostListener } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
 import { ApiService } from '../service/api.service';
 import { Item, ItemDetail } from '../interface/item';
 import { ItemComponent } from '../item/item.component';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [JsonPipe, ItemComponent],
-  providers: [ApiService],
+  imports: [RouterLink, ItemComponent],
+  providers: [],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })
-export class ListComponent implements OnInit {
-  protected readonly item = signal<ItemDetail[]>([]);
-  private total = 0;
-  // protected readonly item = signal<Item & { details: ItemDetail[] }>({
-  //   count: 0,
-  //   results: [],
-  //   details: []
-  // });
-
+export class ListComponent implements OnInit, AfterViewInit {
   apiService = inject(ApiService);
-
-  ngOnInit() {
-    this.getItem()
+  router = inject(Router);
+  item = computed(() => this.apiService.item());
+  count = computed(() => this.apiService.count());
+  scrollY = computed(() => this.apiService.scrollY());
+  lastIndex = computed(() => this.apiService.lastIndex());
+  // viewportScroller = inject(ViewportScroller);
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    this.apiService.scrollY.update(() => window.scrollY);
   }
 
-  getItem() {
-    // const response = await this.apiService.getItem()
-    // const item = await response.json();
-    // console.log(item);
-  
-    this.apiService.getItem().subscribe((res) => {
-      console.log('res: ', res)
-      // this.item.update(i => {
-      //   return [...i, ...i.details];
-      // });
-      this.item.set(res.details)
-    })
+  ngOnInit() {
+    if (this.item().length == 0) {
+      this.apiService.scrollY.update(() => 0);
+      this.getItem()
+    }
+  }
+
+  ngAfterViewInit(): void {
+    // this.viewportScroller.scrollToPosition([0, this.apiService.scrollY()]); 
+    window.scrollTo(0, this.apiService.scrollY());
+  }
+
+  getItem(next?: string) {
+    this.apiService.getItem();
   }
 
   loaded(id: number) {
-    if (this.item().length < this.total && this.item().at(-2)?.id === id) {
-      // this.getItem(this.questions().length / 5);
+    if ( this.lastIndex() < this.count() && this.item().at(-5)?.id === id) {
       this.getItem();
     }
   }

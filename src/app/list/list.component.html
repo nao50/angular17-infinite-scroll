@@ -15,7 +15,8 @@
     class="flex flex-col w-full md:max-w-screen-md divide-y divide-gray-100"
   >
     @for (item of item(); track item.id) { @defer (on viewport) {
-    <app-item [item]="item" (loaded)="loaded($event)" [id]="item.id" />
+    <!-- <app-item [item]="item" (loaded)="loaded($event)" [id]="item.id" /> -->
+    <app-item [item]="item" (loaded)="loaded(item.id)" [id]="item.id" />
     } @placeholder (minimum 500ms) {
     <div class="flex justify-center py-5" [id]="item.id">
       <ul class="md:max-w-screen-md w-full mx-auto">

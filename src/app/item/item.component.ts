@@ -1,6 +1,6 @@
-import { Component, EventEmitter, effect, input, Output } from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import { JsonPipe, NgOptimizedImage  } from '@angular/common';
-import { Item, ItemDetail } from '../interface/item';
+import { ItemDetail } from '../interface/item';
 
 @Component({
   selector: 'app-item',
@@ -11,7 +11,8 @@ import { Item, ItemDetail } from '../interface/item';
 })
 export class ItemComponent {
   readonly item = input.required<ItemDetail>();
-  @Output() loaded = new EventEmitter<number>();
+  // @Output() loaded = new EventEmitter<number>();
+  loaded = output<number>();
 
   constructor() {
     effect(() => {
